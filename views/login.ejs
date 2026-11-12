@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <title>Prijava</title>
+</head>
+<body>
+  <h1>Imenik zaposlenika</h1>
+  <!-- navigacija izmedu dvije stranice -->
+  <p><a href="/">Pretraga</a> | <a href="/login">Prijava</a></p>
+
+  <h2>Prijava za HR admina (Broken Authentication)</h2>
+
+  <!-- login forma s upisom lozinke ili isprobavanje brute force-a -->
+  <form method="POST">
+    <label>
+      <input type="checkbox" name="ranjivo"> Ranjivost uključena
+    </label>
+    <br><br>
+    Korisnik: <input type="text" name="username" value="admin"><br><br>
+    Lozinka: <input type="text" name="password"><br><br>
+    <button type="submit" formaction="/login">Prijava</button> <!-- jedan pokušaj -->
+    <button type="submit" formaction="/brute">Pokreni brute-force</button> <!-- brute force listom lozinki -->
+  </form>
+
+  <!-- tablica s prikazom pokušaja prijave -->
+  <% if (log) { %>
+    <h3>Dnevnik pokušaja</h3>
+    <table border="1" cellpadding="5">
+      <tr><th>#</th><th>Lozinka</th><th>Ishod</th></tr>
+      <% log.forEach(r => { %>
+        <tr>
+          <td><%= r.pokusaj %></td>
+          <td><%= r.lozinka %></td>
+          <td><%= r.ishod %></td>
+        </tr>
+      <% }) %>
+    </table>
+  <% } %>
+</body>
+</html>
