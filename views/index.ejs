@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <title>Imenik zaposlenika</title>
+</head>
+<body>
+  <h1>Imenik zaposlenika</h1>
+
+  <h2>Pretraga zaposlenika (SQL injection)</h2>
+    
+  <form method="POST" action="/search"> <!-- ruta search -->
+    <label>
+      <input type="checkbox" name="ranjivo"> Ranjivost uključena
+    </label>
+    <br><br>
+    Prezime: <input type="text" name="prezime" value="<%= query ?? '' %>"> <!-- upisano prezime ostane u polju nakon pretrage -->
+    <button type="submit">Traži</button>
+  </form>
+
+  <!-- prikaže izvršeni SQL ako postoji -->
+  <% if (sql) { %>
+    <p><strong>Izvršeni upit:</strong></p>
+    <pre><%= sql %></pre>
+  <% } %>
+
+  <!-- prikaže rezultate ako postoje -->
+  <% if (results) { %>
+    <p>Pronađeno redaka: <%= results.length %></p>
+    <table border="1" cellpadding="5">
+      <tr>
+        <th>Ime</th><th>Prezime</th><th>Odjel</th>
+        <th>Email</th><th>OIB</th><th>Plaća</th>
+      </tr>
+      <% results.forEach(r => { %>
+        <tr>
+          <td><%= r.first_name %></td>
+          <td><%= r.last_name %></td>
+          <td><%= r.department %></td>
+          <td><%= r.email %></td>
+          <td><%= r.oib %></td>
+          <td><%= r.salary %></td>
+        </tr>
+      <% }) %>
+    </table>
+  <% } %>
+</body>
+</html>
