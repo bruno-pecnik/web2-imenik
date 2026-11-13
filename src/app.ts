@@ -12,6 +12,7 @@ app.use(express.urlencoded({ extended: true })); // omogućuje da server čita p
 
 app.use('/', sqliRouter); // uključi rute za SQL umetanje u aplikaciju
 app.use('/', loginRouter); // uključi rute za prijavu u aplikaciju
+app.use(express.static('public')); // CSS mapa
 
 await initDb(); // funkcija iz db.ts, inicijalizira bazu
 app.listen(port, () => console.log(`Server na portu ${port}`));
