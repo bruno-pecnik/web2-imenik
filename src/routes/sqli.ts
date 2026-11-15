@@ -20,11 +20,11 @@ sqliRouter.post('/search', async (req, res) => {
 
   if (ranjivo) {
     // nesigurno, prezime se spaja direkno na SQL, pa unos postaje dio koda
-    sql = `SELECT * FROM employees WHERE last_name = '${prezime}'`;
+    sql = `SELECT * FROM employees WHERE LOWER(last_name) = LOWER('${prezime}')`;
     result = await pool.query(sql);
   } else {
     // sigurno, prezime se salje odvojeno u nizu, pg ga umetne na mjesto $1 (baza tretira kao vrijednost, ne kao SQL)
-    sql = `SELECT * FROM employees WHERE last_name = $1`;
+    sql = `SELECT * FROM employees WHERE LOWER(last_name) = LOWER($1)`;
     result = await pool.query(sql, [prezime]);
   }
 
